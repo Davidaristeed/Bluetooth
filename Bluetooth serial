@@ -1,0 +1,23 @@
+#include <Arduino.h>
+#include "BluetoothSerial.h"
+
+#if !defined(CONFIG_BT_ENABLED) || !defined(CONFIG_BLUEDROID_ENABLED)
+#error Bluetooth not enabled! Please run 'make menuconfig' to enable
+#endif
+
+BluetoothSerial serialBT ;
+
+
+void setup() {
+  Serial.begin(115200);
+  serialBT.begin("Manu"); // NAme your device
+  Serial.println("Device has started. Let's get to pairing"); // So you'll know your device has started
+
+}
+
+void loop() {
+  if(Serial.available()){
+    serialBT.write(Serial.read());
+  }
+  delay(20);
+}
